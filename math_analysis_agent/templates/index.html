@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数学分析智能学习助手</title>
+    <!-- 引入MathJax渲染LaTeX公式 -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .container { margin-top: 30px; }
+        .question-input { width: 80%; padding: 12px; font-size: 16px; border: 2px solid #007bff; border-radius: 4px; }
+        .submit-btn { padding: 12px 24px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .answer-card { margin-top: 30px; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+        .title { color: #007bff; font-size: 20px; font-weight: bold; margin-bottom: 15px; }
+        .content { line-height: 1.8; font-size: 16px; margin-bottom: 20px; }
+        .example, .exercise { background: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333;">📚 数学分析智能学习助手</h1>
+    <div class="container" style="text-align: center;">
+        <form method="POST">
+            <input type="text" class="question-input" name="question" placeholder="请输入你的数学分析问题（例如：什么是极限？求导数的方法？）" required>
+            <button type="submit" class="submit-btn">提交查询</button>
+        </form>
+    </div>
+
+    {% if answer %}
+    <div class="answer-card">
+        <div class="title">{{ answer.title }}</div>
+        <div class="content">{{ answer.content|safe }}</div>
+        {% if answer.example %}
+        <div class="example">
+            <strong>例题解析：</strong><br>{{ answer.example|safe }}
+        </div>
+        {% endif %}
+        {% if answer.exercise %}
+        <div class="exercise">
+            <strong>推荐习题：</strong><br>{{ answer.exercise|safe }}
+        </div>
+        {% endif %}
+        {% if plot_url %}
+        <div class="visualization" style="margin-top: 20px;">
+            <strong>可视化图像：</strong><br>
+            <iframe src="{{ plot_url }}" width="800" height="500" frameborder="0"></iframe>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- MathJax配置：自动渲染页面中的LaTeX公式 -->
+    <script>
+        MathJax.config = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+</body>
+</html>

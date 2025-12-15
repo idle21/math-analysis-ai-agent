@@ -1,0 +1,4 @@
+flask==2.3.3
+jieba==0.42.1
+matplotlib==3.8.0  # 新增
+pillow==10.0.1     # 用于处理图片
